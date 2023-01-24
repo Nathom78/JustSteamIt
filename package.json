@@ -1,0 +1,22 @@
+{
+  "name": "juststreamit",
+  "version": "1.0.0",
+  "description": "Développez une interface utilisateur pour une application web Python",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nathom78/JustStreamIt.git"
+  },
+  "author": "Thomas LECOMTE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nathom78/JustStreamIt/issues"
+  },
+  "homepage": "https://github.com/Nathom78/JustStreamIt#readme",
+  "devDependencies": {
+    "eslint": "^8.32.0"
+  }
+}
