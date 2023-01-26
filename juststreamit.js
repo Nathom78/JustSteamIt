@@ -5,7 +5,7 @@ const path = "http://localhost:8000/api/v1/";
 let best_films = window.localStorage.getItem("best_films");
 if (best_films === null){
 	// Récupération de la liste des films depuis le fichier JSON
-	const reponse = await fetch(path + best, {Cross-Origin-Resource-Policy : "strict-origin-when-cross-origin"});
+	const reponse = await fetch(path + best);
 	if (reponse.ok){
 		const films = await reponse.json();
 		// Transformation des films en JSON
