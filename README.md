@@ -26,7 +26,7 @@ Ou utiliser [ce repository](https://github.com/Nathom78/JustStreamIt.git) en té
 
 
 ## 2. Installer l'API
-En clonant mon repository, vous aurez le repository de l'API, en submodule, [ce repository](https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR.git)
+Vous devez cloner le repository de l'API [ce repository](https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR.git)
 Ensuite suivre les notes depuis le repository, pour decomptacter la base de données et lancer le serveur de l'API.
 
 ## 3. Installer les paquets nécessaires aux projets ( Juste pour apporter des améliorations)

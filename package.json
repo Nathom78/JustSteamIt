@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Nathom78/JustStreamIt#readme",
   "devDependencies": {
     "eslint": "^8.32.0"
+  },
+  "dependencies": {
+    "chart.js": "^4.2.0"
   }
 }
