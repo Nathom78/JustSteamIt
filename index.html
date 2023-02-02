@@ -9,12 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="style/style.css" rel="stylesheet" />
+    <link href="style/style.css" rel="stylesheet">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     
-    <script src="node_modules/chart.js/dist/chart.umd.js" defer></script>
-    <script type="module" src="juststreamit.js"></script> 
+    
+    
   </head>
 
   <body>
@@ -35,27 +35,76 @@
     <main class="limitedWidthBlockContainer">
       <div class="limitedWidthBlock">       
         <section class="bestfilm" id="bestfilm"> 
-          <a ></a>
+          <div class="zoneButton"><p></p><button class="buttonFilm">Film</button></div>         
         </section>
-        <section class="categories" id="categorie">
+        <section class="slider-container" id="categorie">
+          <h2>Films les mieux notés</h2>
+          <div class="slider" name="slider1">            
+            <div class="slide">
+              <button class="buttonPrev" id="prevBtn1"><</button>
+              <button class="buttonNext" id="nextBtn1">></button>
+            </div>            
+          </div>         
         </section>
-        <section class="categories"> 
+        <section class="slider-container" id="Adventure">
+          <h2>Adventure</h2>
+          <div class="slider" name="slider2">
+            <button class="buttonPrev" id="prevBtn2"><</button>
+            <button class="buttonNext" id="nextBtn2">></button>
+            <div class="slide">
+            </div>
+          </div>          
         </section>
-        <section class="categories">
+        <section class="slider-container" id="Comedy">
+          <h2>Comedy</h2>
+          <div class="slider " name="slider3">
+            <button class="buttonPrev" id="prevBtn3"><</button>
+            <button class="buttonNext" id="nextBtn3">></button>
+            <div class="slide" >
+            </div>
+          </div>          
         </section>
-        <section class="categories"> 
-
+        <section class="slider-container" id="Fantasy">
+          <h2>Fantasy</h2>
+          <div class="slider" name="slider4">
+            <button class="buttonPrev" id="prevBtn4"><</button>
+            <button class="buttonNext" id="nextBtn4">></button>
+            <div class="slide">
+            </div>
+          </div>          
         </section>
       </div>
     </main>
     
     <footer>
       <div class="limitedWidthBlockContainer footerMain">
-        <div class="limitedWidthBlock">
-         
+        <div class="limitedWidthBlock">         
         </div>
       </div>     
     </footer>
    
   </body>
+  <script src="juststreamit.js"></script>
 </html>
+
+<!-- The Modal
+<div id="myModal" class="modal">
+ 
+  <span class="close">&times;</span>
+  
+  <img class="modal-content" id="img01">
+  
+  <div id="caption">
+    <p id="filmTitle"></p>
+    <p id="filmGenres"></p>
+    <p id="filmYear"></p>
+    <p id="filmRated"></p>
+    <p id="filmImdb"></p>
+    <p id="filmDirectors"></p>
+    <p id="filmActors"></p>
+    <p id="filmDuration"></p>
+    <p id="filmCountries"></p>
+    <p id="filmBoxOffice"></p>
+    <p id="filmDescription"></p>              
+  </div>            
+</div> -->
