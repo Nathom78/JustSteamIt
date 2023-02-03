@@ -145,9 +145,8 @@ async function best_film(sessionStorageOK) {
 		const categorie = "best_films";		
 		var best_films = window.sessionStorage.getItem(categorie);
 		/* Récupération dans le sessionStorage du 1er film*/
-		const best_films_dict = JSON.parse(best_films);
-		console.table(best_films_dict);
-		const bestFilm = best_films_dict[0];		
+		const best_films_array = JSON.parse(best_films);		
+		const bestFilm = best_films_array[0];		
 
 		// Récupération de l'élément du DOM qui accueillera le film
 		const section1 = document.querySelector(".bestfilm");
@@ -166,10 +165,8 @@ async function best_film(sessionStorageOK) {
 		const zoneBouton = document.querySelector(".zoneButton button");
 		// Création du modale
 		const zoneModale = document.createElement("div");
-		zoneModale.classList.add("modal");
-		
-		section1.appendChild(zoneModale);
-		// .querySelector(`article[data-id="${id}"]`)
+		zoneModale.classList.add("modal");		
+		section1.appendChild(zoneModale);		
 		
 		zoneBouton.addEventListener("click", function() {
 			modale(bestFilm.url, zoneModale);
@@ -269,10 +266,10 @@ async function sevenBestFilm(sessionStorageOK) {
 	if (sessionStorageOK){
 		/* Récupération dans le sessionStorage des 7 autres films*/		
 		var best_films = window.sessionStorage.getItem("best_films");
-		const best_films_dict = JSON.parse(best_films);		
+		const best_films_array = JSON.parse(best_films);		
 		
 		for (var i = 1; i < 8; i++){			
-			var film = best_films_dict[i];
+			var film = best_films_array[i];
 			// Récupération de l'élément du DOM qui accueillera les films
 			var section = document.querySelector("#categorie > div > div.slide");
 			// Création de l'image + titre du film
@@ -282,7 +279,7 @@ async function sevenBestFilm(sessionStorageOK) {
 			imageFilm.title = film.title;
 			imageFilm.classList.add("imgFilm");
 			imageFilm.dataset.url = film.url;
-			section.appendChild(imageFilm);				
+			section.appendChild(imageFilm);		
 			
 			// Création du modale
 			const zoneModale = document.createElement("div");
@@ -306,24 +303,39 @@ async function categorie(sessionStorageOK,categorie,nb){
 	if (needSessionStorage){
 	/* Récupération dans le sessionStorage des 7 films*/		
 		var best_films = window.sessionStorage.getItem(categorie);
-		const best_films_dict = JSON.parse(best_films);
-		const nbmaxFilm = best_films_dict.length > 7 ? 7: best_films_dict.length ;
-	
-		for (var i = 0; i < nbmaxFilm; i++){
+		const best_films_array = JSON.parse(best_films);
+		const nbmaxFilm = best_films_array.length > 7 ? 7: best_films_array.length ;
+		console.log(best_films_array);
 		
-			var film = best_films_dict[i];
+		for (var i = 0; i < nbmaxFilm;){
+		
+			var film = best_films_array[i];
 			// Récupération de l'élément du DOM qui accueillera les films
 			var section = document.querySelector("#"+categorie+" > div > div.slide");
 			// Création de l'image + titre du film
 
 			var imageFilm = document.createElement("img");
 			imageFilm.src = film.image_url;
+			
+			try{
+				await fetch(film.image_url, {
+					
+				});				
+			}
+			catch{
+				delete best_films_array[i];
+				window.sessionStorage.setItem(categorie, JSON.stringify(best_films_array));
+				continue;
+			}
 			imageFilm.alt = "film image";
 			imageFilm.title = film.title;
 			imageFilm.classList.add("imgFilm");
 			imageFilm.dataset.url = film.url;
-			section.appendChild(imageFilm);				
-		
+			section.appendChild(imageFilm);
+			if (imageFilm.error){
+				console.log(imageFilm.error);
+			}			
+			i += 1;
 			// Création du modale
 			const zoneModale = document.createElement("div");
 			zoneModale.classList.add("modal");				
@@ -339,7 +351,7 @@ async function categorie(sessionStorageOK,categorie,nb){
 }
 
 function slider(categorie){
-
+	/* Décalage du carroussel */
 	const widthOutput = window.innerWidth;	
 	var slider = document.querySelector(".slider[name='slider"+categorie+"']");
 	var prevBtn = document.querySelector("#prevBtn"+categorie);
@@ -361,7 +373,7 @@ function slider(categorie){
 	});
 }
 
-async function run(){
+async function main(){
 	var sessionStorageOK = await loadSessionStorage();
 	best_film(sessionStorageOK);	
 	sevenBestFilm(sessionStorageOK);
@@ -370,6 +382,5 @@ async function run(){
 	categorie(sessionStorageOK,"Fantasy","4");
 }
 
-run();
-console.log(window.sessionStorage);
+main();
 
