@@ -170,6 +170,7 @@ async function best_film(sessionStorageOK) {
 		
 		zoneBouton.addEventListener("click", function() {
 			modale(bestFilm.url, zoneModale);
+			zoneModale.style.display = "block";
 		});
 	}	
 }
@@ -298,53 +299,45 @@ async function sevenBestFilm(sessionStorageOK) {
 
 async function categorie(sessionStorageOK,categorie,nb){
 /* Test du sessionStorage chargé */
-	
-	var needSessionStorage = sessionStorageOK;		
-	if (needSessionStorage){
+			
+	if (sessionStorageOK){
 	/* Récupération dans le sessionStorage des 7 films*/		
 		var best_films = window.sessionStorage.getItem(categorie);
 		const best_films_array = JSON.parse(best_films);
-		const nbmaxFilm = best_films_array.length > 7 ? 7: best_films_array.length ;
-		console.log(best_films_array);
+		const nbmaxFilm = best_films_array.length;		
 		
-		for (var i = 0; i < nbmaxFilm;){
-		
+		for (var i = 0, y = 0; (i < nbmaxFilm) && (y < 7); i++){
+			
 			var film = best_films_array[i];
 			// Récupération de l'élément du DOM qui accueillera les films
 			var section = document.querySelector("#"+categorie+" > div > div.slide");
 			// Création de l'image + titre du film
 
 			var imageFilm = document.createElement("img");
-			imageFilm.src = film.image_url;
-			
 			try{
-				await fetch(film.image_url, {
-					
-				});				
-			}
-			catch{
-				delete best_films_array[i];
-				window.sessionStorage.setItem(categorie, JSON.stringify(best_films_array));
+				await fetch(film.image_url); /* on part sur le fait que CORS soit une erreur par le browser, impossible de récuperer le status 404 */
+			}	
+			catch {
 				continue;
-			}
+			}				
+			
+			imageFilm.src = film.image_url;			
 			imageFilm.alt = "film image";
 			imageFilm.title = film.title;
 			imageFilm.classList.add("imgFilm");
 			imageFilm.dataset.url = film.url;
-			section.appendChild(imageFilm);
-			if (imageFilm.error){
-				console.log(imageFilm.error);
-			}			
-			i += 1;
+			section.appendChild(imageFilm);		
+			
 			// Création du modale
 			const zoneModale = document.createElement("div");
 			zoneModale.classList.add("modal");				
 			section.appendChild(zoneModale);
-		
+			
 			imageFilm.addEventListener("click", function(event) {
 				modale(event.target.dataset.url, zoneModale);
 				zoneModale.style.display = "block";
 			});
+			y += 1;
 		}
 		slider(nb);	
 	}	
@@ -352,7 +345,8 @@ async function categorie(sessionStorageOK,categorie,nb){
 
 function slider(categorie){
 	/* Décalage du carroussel */
-	const widthOutput = window.innerWidth;	
+	const widthOutput = window.innerWidth;
+	var maxwidth = widthOutput < 1000 ? 850 : 1350;
 	var slider = document.querySelector(".slider[name='slider"+categorie+"']");
 	var prevBtn = document.querySelector("#prevBtn"+categorie);
 	var nextBtn = document.querySelector("#nextBtn"+categorie);
@@ -367,8 +361,8 @@ function slider(categorie){
 
 	nextBtn.addEventListener("click", function() {
 		slider.style.marginLeft = parseInt(slider.style.marginLeft || 0) - 100 + "px";
-		if (parseInt(slider.style.marginLeft) < -widthOutput/2){
-			slider.style.marginLeft = -widthOutput/2 + "px"; 
+		if (parseInt(slider.style.marginLeft) < -maxwidth){
+			slider.style.marginLeft = -maxwidth + "px"; 
 		}		
 	});
 }
