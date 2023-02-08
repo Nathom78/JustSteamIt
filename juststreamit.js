@@ -3,6 +3,8 @@ const path = "http://localhost:8000/api/v1/";
 const pageArray = ["","page=2&"];
 
 
+/* ************************************ */
+/* Load info from API + windows Storage */
 
 async function loadBestFilm() {
 // Meilleurs films dans le local storage	
@@ -137,6 +139,9 @@ async function loadSessionStorage() {
 	}
 	
 }
+
+/* ******************* */
+/* Affichage Categorie */ 
 
 async function best_film(sessionStorageOK) {
 /* Affichage dans le DOM du meilleur film */	
