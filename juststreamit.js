@@ -41,8 +41,8 @@ async function loadCategorie(categorie) {
 
 	for(var i = 0; i < 2; i++){		
 		page = pageArray[i];
-		categorieAPI = "titles/?"+page+"sort_by=-imdb_score&genre_contains="+categorie;			
-		var reponse = await fetch(path + categorieAPI);				
+		categorieAPI = "titles/?"+page+"sort_by=-imdb_score&genre_contains="+categorie;		
+		var reponse = await fetch(path + categorieAPI);		
 		if (reponse.ok){
 			var films = await reponse.json();
 			// Transformation des films en JSON
@@ -113,7 +113,7 @@ async function loadSessionStorage() {
 	}
 
 	let filmsFantasy = window.sessionStorage.getItem("Fantasy");
-	if ((filmsFantasy === null)||(filmsFantasy == "{}")){
+	if ((filmsFantasy === null)||(filmsFantasy == "{}")){		
 		var result_load4 = await loadCategorie("Fantasy").catch((err) => {		
 			alert("Le serveur à repondu :" + err);		
 		});
@@ -176,8 +176,7 @@ async function best_film(sessionStorageOK) {
 }
 
 async function modale(filmUrl, zoneModale){
-/* Modale film_url: info du film, zoneModale: Element du DOM pour le rattachement*/	
-	console.log(zoneModale);
+/* Modale film_url: info du film, zoneModale: Element du DOM pour le rattachement*/		
 	try{
 		var film_string = await loadFilm(filmUrl);
 	}
@@ -315,9 +314,15 @@ async function categorie(sessionStorageOK,categorie,nb){
 
 			var imageFilm = document.createElement("img");
 			try{
-				await fetch(film.image_url); /* on part sur le fait que CORS soit une erreur par le browser, impossible de récuperer le status 404 */
+				const reponse = await fetch(film.image_url); /* on part sur le fait que CORS soit une erreur par le browser, impossible de récuperer le status 404 */
+				if (reponse.status == 404){
+					throw new Error(404);
+				}
 			}	
-			catch {
+			catch {				
+				best_films_array.splice(i, 1);							
+				window.sessionStorage.setItem(categorie, JSON.stringify(best_films_array));
+				i -= 1;
 				continue;
 			}				
 			
@@ -326,8 +331,8 @@ async function categorie(sessionStorageOK,categorie,nb){
 			imageFilm.title = film.title;
 			imageFilm.classList.add("imgFilm");
 			imageFilm.dataset.url = film.url;
-			section.appendChild(imageFilm);		
-			
+			section.appendChild(imageFilm);
+
 			// Création du modale
 			const zoneModale = document.createElement("div");
 			zoneModale.classList.add("modal");				
